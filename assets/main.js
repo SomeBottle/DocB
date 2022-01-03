@@ -59,7 +59,8 @@ function backTop() {
 function generateCata() { // 生成目录
     let elements = s('#content').querySelectorAll('*'), // 获得文档中所有元素
         titleTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-        generated = [];
+        generated = [],
+        html = '<h2>目录</h2>';
     titleTags = titleTags.filter(x => s(x));
     elements.forEach((val, ind) => {
         let tag = val.tagName.toLowerCase(),
@@ -72,7 +73,11 @@ function generateCata() { // 生成目录
             generated[ind] = [id, name, titleTags.length];
         }
     });
-    cataArr = generated;
+    generated.forEach(x => {
+        let [id, name, layer] = x;
+        html += `<p class="layer${layer}"><a href="javascript:void(0);" onclick="jump(this)" data-id="${id}" class="cataLinks">${name || id}</a></p>`;
+    });
+    s('#panel-content').innerHTML = html;
 }
 function jump(e) { // 锚点跳转
     let id = e.getAttribute('data-id'), hash = location.hash.split('/#')[0];
@@ -80,12 +85,6 @@ function jump(e) { // 锚点跳转
 }
 function catalogue() { // 展示目录面板
     if (!panelOpened) {
-        let html = '<h2>目录</h2>';
-        cataArr.forEach(x => {
-            let [id, name, layer] = x;
-            html += `<p class="layer${layer}"><a href="javascript:void(0);" onclick="jump(this)" data-id="${id}" class="cataLinks">${name || id}</a></p>`;
-        });
-        s('#panel-content').innerHTML = html;
         s('#panel').style.opacity = 1;
         s('#panel').style.width = '500px';
         s('#backBtn').style.opacity = 0;
@@ -109,9 +108,15 @@ async function loadPage(path, pageName, lastPN) {
         fromTop = pageRead[path] || 0,
         [currentPage, currentTop] = current,
         config = loaded.config;
+    pageRead[currentPage] = currentTop;
     if (!local || prPath !== currentPage) { // 判断需不需要加载页面
+        detailsRec(currentPage);
         await getPage(prPath, pageName);
+    } else if (lastPN.startsWith('#')) {
+        console.log(lastPN);
+        detailsRec(currentPage);
     }
+    detailsOpen(prPath);
     let element = lastPN ? document.getElementById(lastPN.replace('#', '')) : false,
         parent = findParentDetails(element);
     if (parent && element.offsetTop <= 0) {
@@ -129,11 +134,8 @@ async function loadPage(path, pageName, lastPN) {
     }, 200);
 }
 async function getPage(path, pageName) { // 载入页面(路径,页面名,页码最后一位)
-    let local = loaded.pages[path],
-        [currentPage, currentTop] = current;
+    let local = loaded.pages[path];
     s('#float').style.display = 'block';
-    pageRead[currentPage] = currentTop;
-    detailsRec(currentPage);
     current = [path, 0];
     let respPage = await (local ? Promise.resolve(local) : fetch('./' + path)
         .then(resp => fHook(resp).text())
@@ -147,7 +149,6 @@ async function getPage(path, pageName) { // 载入页面(路径,页面名,页码
     titleUper(pageName);
     s('#content').innerHTML = renderHook(mark(respPage));
     Prism.highlightAllUnder(s('#content'));
-    detailsOpen(path);
     generateCata();
     s('#float').style.display = 'none';
     return true;
