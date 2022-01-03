@@ -131,6 +131,7 @@ async function loadPage(path, pageName, lastPN) {
 async function getPage(path, pageName) { // 载入页面(路径,页面名,页码最后一位)
     let local = loaded.pages[path],
         [currentPage, currentTop] = current;
+    s('#float').style.display = 'block';
     pageRead[currentPage] = currentTop;
     detailsRec(currentPage);
     current = [path, 0];
@@ -148,6 +149,7 @@ async function getPage(path, pageName) { // 载入页面(路径,页面名,页码
     Prism.highlightAllUnder(s('#content'));
     detailsOpen(path);
     generateCata();
+    s('#float').style.display = 'none';
     return true;
 }
 function notice(txt) { // 闪烁提示
