@@ -2,8 +2,10 @@ import os
 import re
 import json
 
-ab_path = os.path.dirname(__file__)
+ab_path = os.path.dirname(os.path.abspath(__file__))
 pages = {}
+
+print(f'当前工作目录：{ab_path}')
 
 
 def input_dir():
@@ -50,14 +52,13 @@ if __name__ == "__main__":
         path = rela_path+clean_path
         operating = operate_dict(clean_path)
         for i in files:
-            if i.lower() == index_file:
-                continue
             file_path = path+'/'+i
             file_title = get_title(ab_path+'/'+file_path)
             operating[i] = [file_path, file_title]
     config = {
         "doc_title": "Document",
         "auto_url": True,
+        "jump_hist": True,
         "index": {},
         "pages": pages,
         "not_found": ["404.md", "404"]

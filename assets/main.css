@@ -98,6 +98,10 @@ nav p {
     margin-left: 4em;
 }
 
+.panel-content .layer6 {
+    margin-left: 4.8em;
+}
+
 .btn {
     position: relative;
     display: block;

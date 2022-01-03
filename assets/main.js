@@ -107,7 +107,8 @@ function findParentDetails(e) { // 找到父节点中的details标签
 async function loadPage(path, pageName, lastPN) {
     let prPath = path.split('/#')[0], local = loaded.pages[prPath],
         fromTop = pageRead[path] || 0,
-        [currentPage, currentTop] = current;
+        [currentPage, currentTop] = current,
+        config = loaded.config;
     if (!local || prPath !== currentPage) { // 判断需不需要加载页面
         await getPage(prPath, pageName);
     }
@@ -119,7 +120,7 @@ async function loadPage(path, pageName, lastPN) {
     setTimeout(() => {
         if (element) {
             element.scrollIntoView({ behavior: "smooth" });
-        } else {
+        } else if (config.jump_hist) {
             window.scrollTo({// 载入页面后滚到指定位置
                 top: fromTop,
                 behavior: "smooth"
@@ -144,6 +145,7 @@ async function getPage(path, pageName) { // 载入页面(路径,页面名,页码
     loaded.pages[path] = respPage;
     titleUper(pageName);
     s('#content').innerHTML = renderHook(mark(respPage));
+    Prism.highlightAllUnder(s('#content'));
     detailsOpen(path);
     generateCata();
     return true;
@@ -163,6 +165,9 @@ fetch('./config.json') // 获得配置文件
     })
     .then(resp => {
         loaded.config = resp;
+        if (resp.index.length < 2) {
+            s('#content').innerHTML = '<p>请配置config.json</p>';
+        }
         console.log('Successfully loaded config.json.');
         return Promise.resolve(resp);
     }).then(config => {
@@ -191,6 +196,10 @@ fetch('./config.json') // 获得配置文件
         }
         rou.r();
     })
+rou.uk((pageKey, pn) => {
+    let [p, n] = loaded.config.not_found;
+    loadPage(p, n);
+})
 window.addEventListener('scroll', () => { // 监听滚动事件
     let currentTop = document.body.scrollTop;
     current[1] = currentTop;
