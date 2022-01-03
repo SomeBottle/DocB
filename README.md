@@ -1,5 +1,5 @@
 # DocB
-极简的文档展示页
+极简的**Markdown**文档展示页
 
 ![preview](https://cdn.jsdelivr.net/gh/SomeBottle/DocB@main/assets/preview.png)   
 
@@ -143,8 +143,15 @@ TEST
 └─Others
     ├─Physics
     └─Python
-
 ```
+
+## 引用项目  
+
+* [rou.js](https://github.com/SomeBottle/rou.js)  
+* [Prism](https://github.com/PrismJS/prism)  
+* [github-markdown-css](https://github.com/sindresorhus/github-markdown-css)  
+* [markdown-It](https://github.com/markdown-it/markdown-it)  
+* [markdown-It-Anchor](https://github.com/valeriangalliat/markdown-it-anchor)  
 
 ------
 ### UNDER MIT LICENSE.
