@@ -1,0 +1,149 @@
+body {
+    position: relative;
+    margin: 3em 1em 1em 1em;
+}
+
+nav {
+    position: fixed;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    height: 3.8em;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .5s ease;
+}
+
+nav p {
+    display: block;
+    text-align: center;
+    word-break: break-word;
+    flex: 1;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.container {
+    max-width: 870px;
+    margin: 0 auto;
+}
+
+.panel {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0px;
+    opacity: 0;
+    max-width: 100%;
+    border-left: 3px dashed rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.9);
+    overflow-y: auto;
+    transition: 1s ease;
+}
+
+.panel .close {
+    position: fixed;
+    display: block;
+    font-size: 2em;
+    text-decoration: none;
+    top: .5em;
+    right: .5em;
+    color: black;
+}
+
+.panel-content {
+    margin: 1em 0 0 1em;
+}
+
+.panel-content a {
+    color: #848484;
+    text-decoration: none;
+    transition: .5s ease;
+}
+
+.panel-content a:hover {
+    color: #2E2E2E;
+    text-decoration: underline;
+}
+
+.panel-content p {
+    margin: .5em 0;
+}
+
+.panel-content .layer0 {
+    font-size: 1.2em;
+}
+
+.panel-content .layer1 {
+    margin-left: .8em;
+}
+
+.panel-content .layer2 {
+    margin-left: 1.6em;
+}
+
+.panel-content .layer3 {
+    margin-left: 2.4em;
+}
+
+.panel-content .layer4 {
+    margin-left: 3.2em;
+}
+
+.panel-content .layer5 {
+    margin-left: 4em;
+}
+
+.btn {
+    position: relative;
+    display: block;
+    margin: .5em;
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #585858;
+    transition: .4s ease;
+}
+
+.btn:hover {
+    font-size: 1.8em;
+}
+
+.backTop {
+    position: fixed;
+    left: .5em;
+    bottom: .5em;
+    opacity: 0;
+    transition: .5s ease;
+}
+
+.backTop img {
+    width: 1.5em;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+    5% {
+        opacity: 0.5;
+    }
+    10% {
+        opacity: 1;
+    }
+    15% {
+        opacity: 0.5;
+    }
+    20% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
