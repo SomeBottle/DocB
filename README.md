@@ -10,6 +10,45 @@
 * 记忆每页浏览的位置  
 * 在必要的时候自动展开```<details>```标签  
 
+## 部署方法
+1. 将仓库内的文件上传到**静态网站服务器**。  
+2. 将**Markdown文档**整理后放在根目录下的一个目录中。
+3. 自行修改或者借助[```auto.py```](#%E5%B0%8F%E5%B7%A5%E5%85%B7)生成```config.json```。  
+
+例如我将文档放在根目录下的```test```目录里，一切处理完后整个文件结构如下：  
+
+```
+网站根目录
+│  404.md
+│  auto.py
+│  config.json
+│  index.html
+│  
+├─assets
+│      main.css
+│      main.js
+│      preview.png
+│      rou.m.js
+│      top.png
+│      
+└─test  <--文档都在这个目录里
+    │  bookmarks.md
+    │  README.md
+    │  
+    ├─Algo
+    │      BinarySearch.md
+    │      
+    └─Others
+        │  DatabaseRelationalAlgebra.md
+        │  
+        ├─Physics
+        │      HallEfxAndSemiconductor.md
+        │      PhyExpMeasuredAndSignificantFigure.md
+        │      
+        └─Python
+                TipsOfRegex.md
+```
+
 ## 配置文件  
 根目录下的```config.json```：  
 
