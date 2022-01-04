@@ -1,3 +1,4 @@
+/*DocB 1.4 - SomeBottle*/
 'use strict';
 var loaded = { config: {}, pages: {} },
     pageRead = {}, // 页面读到哪里了，记录scrollTop
@@ -109,6 +110,7 @@ async function loadPage(path, pageName, lastPN) {
         fromTop = pageRead[path] || 0,
         [currentPage, currentTop] = current,
         config = loaded.config;
+    lastPN = lastPN || '';
     pageRead[currentPage] = currentTop;
     if (!local || prPath !== currentPage) { // 判断需不需要抓取页面，本地没有储存或路径和前一页不相同时就要抓取页面
         detailsRec(currentPage);
