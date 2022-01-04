@@ -1,4 +1,4 @@
-/*DocB 1.4 - SomeBottle*/
+/*DocB 1.5 - SomeBottle*/
 'use strict';
 var loaded = { config: {}, pages: {} },
     pageRead = {}, // 页面读到哪里了，记录scrollTop
@@ -111,12 +111,13 @@ async function loadPage(path, pageName, lastPN) {
         [currentPage, currentTop] = current,
         config = loaded.config;
     lastPN = lastPN || '';
-    pageRead[currentPage] = currentTop;
     if (!local || prPath !== currentPage) { // 判断需不需要抓取页面，本地没有储存或路径和前一页不相同时就要抓取页面
-        detailsRec(currentPage);
+        pageRead[currentPage] = currentTop; // 记忆页面浏览位置
+        detailsRec(currentPage); // 记忆页面details标签展开情况
         await getPage(prPath, pageName);
     } else if (lastPN.startsWith('#') && !currentLastPN.startsWith('#')) {// 前一页没有锚点，当前页有锚点时就要记录details标签情况
-        detailsRec(currentPage);
+        pageRead[currentPage] = currentTop; // 记忆页面浏览位置
+        detailsRec(currentPage); // 记忆页面details标签展开情况
     }
     currentLastPN = lastPN; // 更新最后的页码
     detailsOpen(prPath);
