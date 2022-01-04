@@ -4,6 +4,7 @@ var loaded = { config: {}, pages: {} },
     pageDetails = {}, // 页面details标签
     cataArr = [], // 目录数组
     current = ['', 0], // [当前页面路径,当前scrollTop]
+    currentLastPN = '', // 当前页码的最后一位
     panelOpened = false;
 var mark = function (content) { // markdown处理
     return window.markdownit({ html: true, linkify: true })
@@ -109,13 +110,13 @@ async function loadPage(path, pageName, lastPN) {
         [currentPage, currentTop] = current,
         config = loaded.config;
     pageRead[currentPage] = currentTop;
-    if (!local || prPath !== currentPage) { // 判断需不需要加载页面
+    if (!local || prPath !== currentPage) { // 判断需不需要抓取页面，本地没有储存或路径和前一页不相同时就要抓取页面
         detailsRec(currentPage);
         await getPage(prPath, pageName);
-    } else if (lastPN.startsWith('#')) {
-        console.log(lastPN);
+    } else if (lastPN.startsWith('#') && !currentLastPN.startsWith('#')) {// 前一页没有锚点，当前页有锚点时就要记录details标签情况
         detailsRec(currentPage);
     }
+    currentLastPN = lastPN; // 更新最后的页码
     detailsOpen(prPath);
     let element = lastPN ? document.getElementById(lastPN.replace('#', '')) : false,
         parent = findParentDetails(element);
