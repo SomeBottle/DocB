@@ -33,14 +33,18 @@ def operate_dict(path):
 
 def get_title(file_path):
     title = ''
-    with open(file_path, encoding='utf-8') as file:
-        lines = file.readlines()
-    for o in lines:
-        line = o.strip()
-        if line.startswith('#'):
-            title = re.sub(r'#+\s*', '', line)
-            break
-    return title
+    try:
+        with open(file_path, encoding='utf-8') as file:
+            lines = file.readlines()
+        for o in lines:
+            line = o.strip()
+            if line.startswith('#'):
+                title = re.sub(r'#+\s*', '', line)
+                break
+        return title
+    except Exception:
+        print('Failed to get title:', file_path)
+        return ''
 
 
 if __name__ == "__main__":
@@ -53,6 +57,7 @@ if __name__ == "__main__":
         operating = operate_dict(clean_path)
         for i in files:
             file_path = path+'/'+i
+            print('Walking:', i)
             file_title = get_title(ab_path+'/'+file_path)
             operating[i] = [file_path, file_title]
     config = {
